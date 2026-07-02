@@ -10,7 +10,7 @@ export function createApiClient(): AxiosInstance {
   const client = axios.create({
     baseURL: NEST_URL,
     timeout: 300_000, // 5 min for AI calls
-    withCredentials: true
+    withCredentials: true,
   });
 
   client.interceptors.request.use((config) => {
@@ -59,7 +59,7 @@ export function createApiClient(): AxiosInstance {
         return client(original);
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   return client;

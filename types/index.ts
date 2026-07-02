@@ -1,3 +1,5 @@
+export * from './analysisResult';
+
 // ── Auth ─────────────────────────────────────────────────────────────────
 export interface User {
   id: string;
@@ -20,9 +22,9 @@ export interface AuthResponse {
 export interface Plan {
   id: string;
   name: string;
-  price_inr: number;
+  price_usd: number;
   description: string;
-  razorpay_plan_id: string | null;
+  stripe_price_id: string | null;
   quota: Record<string, number>;
   features: string[];
 }
@@ -31,9 +33,9 @@ export interface Plan {
 export interface Subscription {
   status: "active" | "created" | "halted" | "cancelled";
   current_period_end: string | null;
-  razorpay_subscription_id: string | null;
+  stripe_subscription_id: string | null;
   plan_name: string;
-  price_inr: number;
+  price_usd: number;
   quota: Record<string, number>;
   features: string[];
 }
