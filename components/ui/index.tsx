@@ -7,3 +7,4 @@ export * from "./Spinner";
 export * from "./Progress";
 export * from "./SectionHeader";
 export * from "./Alert";
+export * from "./Section";
