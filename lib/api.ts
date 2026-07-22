@@ -1,3 +1,4 @@
+import { UpdateUserDto } from "@/types/user/UpdateUserDto";
 import axios, { AxiosInstance } from "axios";
 
 const NEST_URL =
@@ -113,3 +114,8 @@ export const aiApi = {
 export const usageApi = {
   getAll: () => api.get("/users/usage"),
 };
+
+export const userApi = {
+  getProfile: () => api.get("/users"),
+  updateProfile: (data: UpdateUserDto) => api.patch("/users", data),
+}
