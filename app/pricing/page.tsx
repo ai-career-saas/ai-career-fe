@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Check, Sparkles, Zap, Crown, ArrowLeft, Loader2 } from "lucide-react";
 import { Button, Badge, Card, Alert, Spinner } from "@/components/ui";
-import { plansApi, billingApi } from "@/lib/api";
-import { useAuthStore } from "@/lib/auth-store";
+import { plansApi, billingApi, authApi } from "@/lib/api";
+import { useAuthStore } from "@/utils/store/authStore";
 import { Plan } from "@/types";
 
 const PLAN_ICONS: Record<string, React.ReactNode> = {
@@ -26,10 +26,11 @@ const PLAN_STYLES: Record<
 
 export default function PricingPage() {
   const router = useRouter();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, setUser } = useAuthStore();
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
   const [subscribing, setSubscribing] = useState<string | null>(null);
+  const [cancelling, setCancelling] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -73,6 +74,35 @@ export default function PricingPage() {
     }
   };
 
+  const handleCancelSubscription = async () => {
+    if (!user || user.plan_name === "Free") {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "Cancel your subscription? You can still use the current plan until the billing period ends."
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+    setCancelling(true);
+
+    try {
+      await billingApi.cancel();
+      const { data } = await authApi.me();
+      setUser(data);
+      setSuccess("Your subscription has been cancelled.");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Failed to cancel subscription");
+    } finally {
+      setCancelling(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
@@ -82,7 +112,7 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-16 px-4">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 to-white py-16 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Back button */}
         {isAuthenticated() && (
@@ -106,6 +136,42 @@ export default function PricingPage() {
             Unlock AI-powered career tools. Start free, upgrade anytime.
           </p>
         </div>
+
+        {isAuthenticated() && (
+          <Card className="mb-8 border border-slate-200 shadow-sm bg-white">
+            <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Subscription settings
+                </p>
+                <h2 className="text-xl font-bold text-slate-900">
+                  Manage your current plan
+                </h2>
+                <p className="text-sm text-slate-500 max-w-2xl">
+                  {user?.plan_name && user.plan_name !== "Free"
+                    ? `You are currently on the ${user.plan_name} plan. You can cancel here or review other plans below.`
+                    : "You are on the Free plan. Choose a plan below to upgrade when you are ready."}
+                </p>
+              </div>
+
+              {user?.plan_name && user.plan_name !== "Free" ? (
+                <Button
+                  variant="danger"
+                  className="shrink-0"
+                  onClick={handleCancelSubscription}
+                  loading={cancelling}
+                  disabled={cancelling}
+                >
+                  Cancel subscription
+                </Button>
+              ) : (
+                <div className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-500 border border-slate-200">
+                  No active paid subscription
+                </div>
+              )}
+            </div>
+          </Card>
+        )}
 
         {/* Alerts */}
         {error && (

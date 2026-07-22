@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail, Sparkles } from "lucide-react";
 import { Button, Input, Alert, Card } from "@/components/ui";
-import { useAuthStore } from "@/lib/auth-store";
-import { authApi } from "@/lib/api";
+import { useAuthStore } from "@/utils/store/authStore";
+import { client } from "@/utils/api/client";
 
 function LoginForm() {
   const router = useRouter();
@@ -23,13 +23,18 @@ function LoginForm() {
     setError("");
     setLoading(true);
     try {
-      const { data } = await authApi.login(form);
-      setAuth(data.user, data.access_token, data.refresh_token);
+      const { data } = await client.POST("/auth/login", {
+        body: form,
+      });
+      setAuth(data!.user, data!.access_token, data!.refresh_token);
+
       const from = params.get("from") || "/dashboard";
+      
       router.push(from);
     } catch (err: any) {
       setError(
-        err.response?.data?.message || "Invalid email or password. Please try again."
+        err.response?.data?.message ||
+          "Invalid email or password. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -70,7 +75,9 @@ function LoginForm() {
             />
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-slate-700">Password</label>
+              <label className="text-sm font-medium text-slate-700">
+                Password
+              </label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                   <Lock size={16} />
@@ -78,7 +85,9 @@ function LoginForm() {
                 <input
                   type={showPw ? "text" : "password"}
                   value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
@@ -106,7 +115,10 @@ function LoginForm() {
 
           <p className="text-center text-sm text-slate-500 mt-6">
             Don&apos;t have an account?{" "}
-            <Link href="/auth/register" className="text-blue-600 font-medium hover:underline">
+            <Link
+              href="/auth/register"
+              className="text-blue-600 font-medium hover:underline"
+            >
               Create one free
             </Link>
           </p>

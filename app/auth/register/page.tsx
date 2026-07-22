@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Lock, Mail, Sparkles, User } from "lucide-react";
 import { Button, Input, Alert, Card } from "@/components/ui";
-import { useAuthStore } from "@/lib/auth-store";
-import { authApi } from "@/lib/api";
+import { useAuthStore } from "@/utils/store/authStore";
+import { client } from "@/utils/api/client";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -34,12 +34,15 @@ export default function RegisterPage() {
     setError("");
     setLoading(true);
     try {
-      const { data } = await authApi.register({
-        name: form.name,
-        email: form.email,
-        password: form.password,
+      const { data } = await client.POST("/auth/register", {
+        body: {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+        },
       });
-      setAuth(data.user, data.access_token, data.refresh_token);
+      setAuth(data!.user, data!.access_token, data!.refresh_token);
+
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
