@@ -13,7 +13,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Card, Badge, ProgressBar, Spinner } from "@/components/ui";
-import { useAuthStore } from "@/lib/auth-store";
+import { useAuthStore } from "@/utils/store/authStore";
 import { usageApi, authApi } from "@/lib/api";
 import { UsageMap } from "@/types";
 
