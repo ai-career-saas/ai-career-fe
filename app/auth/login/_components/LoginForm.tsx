@@ -1,9 +1,9 @@
 "use client";
 
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Lock, Mail, Sparkles, User } from "lucide-react";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Eye, EyeOff, Lock, Mail, Sparkles } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Alert, Card } from "@/components/ui";
@@ -11,21 +11,15 @@ import { useAuthStore } from "@/utils/store/authStore";
 import { client } from "@/utils/api/client";
 import * as z from "zod";
 
-const registerSchema = z
-  .object({
-    name: z.string().trim().min(1, "Name is required"),
-    email: z.string().trim().email("Enter a valid email"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirm: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((values) => values.password === values.confirm, {
-    path: ["confirm"],
-    message: "Passwords do not match",
-  });
-type RegisterFormValues = z.infer<typeof registerSchema>;
+const loginSchema = z.object({
+  email: z.string().trim().email("Enter a valid email"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+type LoginFormValues = z.infer<typeof loginSchema>;
 
-export default function RegisterPage() {
+export function LoginForm() {
   const router = useRouter();
+  const params = useSearchParams();
   const { setAuth } = useAuthStore();
 
   const [showPw, setShowPw] = useState(false);
@@ -35,67 +29,55 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      confirm: "",
     },
   });
 
-  const onSubmit = async (values: RegisterFormValues) => {
+  const onSubmit = async (values: LoginFormValues) => {
     setSubmitError("");
     try {
-      const { data } = await client.POST("/auth/register", {
-        body: {
-          name: values.name,
-          email: values.email,
-          password: values.password,
-        },
+      const { data } = await client.POST("/auth/login", {
+        body: values,
       });
+
       setAuth(data!.user, data!.access_token, data!.refresh_token);
 
-      router.push("/dashboard");
+      const from = params.get("from") || "/dashboard";
+
+      router.push(from);
     } catch (err: any) {
       setSubmitError(
-        err.response?.data?.message || "Registration failed. Please try again.",
+        err.response?.data?.message ||
+          "Invalid email or password. Please try again.",
       );
     }
   };
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center p-4">
+      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-md relative">
+        {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-600 mb-4 shadow-lg shadow-blue-500/30">
             <Sparkles size={28} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-white">Create your account</h1>
-          <p className="text-slate-400 mt-1 text-sm">
-            Start free — no credit card required
-          </p>
+          <h1 className="text-2xl font-bold text-white">AI Career Advisor</h1>
+          <p className="text-slate-400 mt-1 text-sm">Sign in to your account</p>
         </div>
 
-        <Card className="p-8 shadow-2xl">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <Card className="p-8 shadow-2xl border-slate-200/50">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {submitError && <Alert variant="error">{submitError}</Alert>}
-
-            <Input
-              label="Full name"
-              type="text"
-              placeholder="Jane Doe"
-              {...register("name")}
-              leftIcon={<User size={16} />}
-              error={errors.name?.message}
-              autoComplete="name"
-            />
 
             <Input
               label="Email address"
@@ -118,9 +100,9 @@ export default function RegisterPage() {
                 <input
                   type={showPw ? "text" : "password"}
                   {...register("password")}
-                  placeholder="At least 8 characters"
-                  autoComplete="new-password"
-                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-10 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-10 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
                   type="button"
@@ -137,33 +119,23 @@ export default function RegisterPage() {
               )}
             </div>
 
-            <Input
-              label="Confirm password"
-              type="password"
-              placeholder="Repeat your password"
-              {...register("confirm")}
-              leftIcon={<Lock size={16} />}
-              error={errors.confirm?.message}
-              autoComplete="new-password"
-            />
-
             <Button
               type="submit"
-              className="w-full mt-2"
+              className="w-full"
               size="lg"
               loading={isSubmitting}
             >
-              Create Account
+              Sign In
             </Button>
           </form>
 
           <p className="text-center text-sm text-slate-500 mt-6">
-            Already have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
-              href="/auth/login"
+              href="/auth/register"
               className="text-blue-600 font-medium hover:underline"
             >
-              Sign in
+              Create one free
             </Link>
           </p>
         </Card>
