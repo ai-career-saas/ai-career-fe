@@ -1,4 +1,4 @@
-export * from './analysisResult';
+export * from "./analysisResult";
 
 // ── Auth ─────────────────────────────────────────────────────────────────
 export interface User {
@@ -22,7 +22,7 @@ export interface AuthResponse {
 export interface Plan {
   id: string;
   name: string;
-  price_usd: number;
+  price_thb: number;
   description: string;
   stripe_price_id: string | null;
   quota: Record<string, number>;
@@ -35,7 +35,7 @@ export interface Subscription {
   current_period_end: string | null;
   stripe_subscription_id: string | null;
   plan_name: string;
-  price_usd: number;
+  price_thb: number;
   quota: Record<string, number>;
   features: string[];
 }
