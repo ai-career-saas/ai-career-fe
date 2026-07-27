@@ -34,7 +34,6 @@ export default function SubscriptionSettingsModal() {
     setLoading(true);
     try {
       const planRes = await client.GET("/billing/subscription");
-      console.log("planRes", planRes);
       setPlan((planRes as any)?.data ?? null);
     } catch {
       setPlan(null);
@@ -42,6 +41,7 @@ export default function SubscriptionSettingsModal() {
 
     try {
       const invoicesRes = await client.GET("/billing/invoices");
+      console.log("invoicesRes", invoicesRes);
       setInvoices((invoicesRes as any)?.data ?? []);
     } catch {
       setInvoices([]);
@@ -85,6 +85,26 @@ export default function SubscriptionSettingsModal() {
       const result = await client.POST("/billing/resume");
       const data = (result as any)?.data ?? null;
       setPlan((prev) => (prev && data ? { ...prev, ...data } : prev));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    setBusy(true);
+
+    try {
+      const response = await client.GET("/billing/portal");
+
+      const portalUrl = (response as any)?.data?.url;
+
+      if (portalUrl) {
+        window.open(portalUrl, "_blank");
+      } else {
+        throw new Error("Failed to get billing portal URL");
+      }
+    } catch (error) {
+      console.error("Error managing subscription:", error);
     } finally {
       setBusy(false);
     }
@@ -168,7 +188,7 @@ export default function SubscriptionSettingsModal() {
                     </ul>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+                  {/* <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
                     <span
                       className={`inline-block h-2 w-2 rounded-full ${
                         plan.subscriptionStatus === "active"
@@ -184,15 +204,16 @@ export default function SubscriptionSettingsModal() {
                         · cancels on {formatDate(plan.currentPeriodEnd)}
                       </span>
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="mt-6 flex flex-wrap gap-2">
                     <button
                       type="button"
                       disabled={busy}
+                      onClick={handleManageSubscription}
                       className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      Manage payment method
+                      Manage subscription
                     </button>
 
                     {plan.cancelAtPeriodEnd ? (
@@ -244,7 +265,7 @@ export default function SubscriptionSettingsModal() {
                   )}
                 </div>
 
-                <div>
+                {/* <div>
                   <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-700">
                     Billing history
                   </h4>
@@ -288,7 +309,7 @@ export default function SubscriptionSettingsModal() {
                       ))}
                     </ul>
                   )}
-                </div>
+                </div> */}
               </div>
             )}
           </div>

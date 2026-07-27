@@ -17,17 +17,35 @@ import { useAuthStore } from "@/utils/store/authStore";
 import { usageApi, authApi } from "@/lib/api";
 import { UsageMap } from "@/types";
 
-const FEATURE_LABELS: Record<string, { label: string; icon: React.ReactNode; href: string; color: string }> = {
-  analyze:       { label: "Career Analysis",   icon: <Target size={18} />,      href: "/dashboard/analyze",        color: "text-blue-600"  },
-  interview_gen: { label: "Interview Prep",     icon: <MessageSquare size={18} />, href: "/dashboard/interview-prep", color: "text-purple-600" },
-  ats_score:     { label: "ATS Scoring",        icon: <FileText size={18} />,    href: "/dashboard/ats-score",      color: "text-green-600" },
+const FEATURE_LABELS: Record<
+  string,
+  { label: string; icon: React.ReactNode; href: string; color: string }
+> = {
+  analyze: {
+    label: "Career Analysis",
+    icon: <Target size={18} />,
+    href: "/dashboard/analyze",
+    color: "text-blue-600",
+  },
+  interview_gen: {
+    label: "Interview Prep",
+    icon: <MessageSquare size={18} />,
+    href: "/dashboard/interview-prep",
+    color: "text-purple-600",
+  },
+  ats_score: {
+    label: "ATS Scoring",
+    icon: <FileText size={18} />,
+    href: "/dashboard/ats-score",
+    color: "text-green-600",
+  },
 };
 
 export default function DashboardPage() {
   const { user, setUser } = useAuthStore();
   const [usage, setUsage] = useState<UsageMap | null>(null);
   const [loading, setLoading] = useState(true);
-
+  console.log(usage);
   useEffect(() => {
     Promise.all([
       usageApi.getAll().then((r) => setUsage(r.data)),
@@ -77,7 +95,10 @@ export default function DashboardPage() {
             ยินดีต้อนรับสู่ AI Career Advisor
           </p>
         </div>
-        <Badge variant={user?.plan_name === "Free" ? "gray" : "blue"} className="px-3 py-1 text-sm">
+        <Badge
+          variant={user?.plan_name === "Free" ? "gray" : "blue"}
+          className="px-3 py-1 text-sm"
+        >
           <Sparkles size={12} className="mr-1" />
           {user?.plan_name || "Free"} Plan
         </Badge>
@@ -89,26 +110,45 @@ export default function DashboardPage() {
           Monthly Usage
         </h2>
         {loading ? (
-          <div className="flex justify-center py-8"><Spinner /></div>
+          <div className="flex justify-center py-8">
+            <Spinner />
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {Object.entries(FEATURE_LABELS).map(([key, meta]) => {
               const u = usage?.[key];
               const pct = u ? Math.round((u.used / u.limit) * 100) : 0;
               const colorClass =
-                pct >= 90 ? "bg-red-500" : pct >= 70 ? "bg-yellow-500" : "bg-blue-500";
+                pct >= 90
+                  ? "bg-red-500"
+                  : pct >= 70
+                    ? "bg-yellow-500"
+                    : "bg-blue-500";
+
               return (
                 <Card key={key} className="p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <span className={meta.color}>{meta.icon}</span>
-                    <span className="text-sm font-medium text-slate-700">{meta.label}</span>
+                    <span className="text-sm font-medium text-slate-700">
+                      {meta.label}
+                    </span>
                   </div>
                   <div className="flex items-end justify-between mb-2">
-                    <span className="text-2xl font-bold text-slate-900">{u?.used ?? 0}</span>
-                    <span className="text-sm text-slate-400">/ {u?.limit ?? 0}</span>
+                    <span className="text-2xl font-bold text-slate-900">
+                      {u?.used ?? 0}
+                    </span>
+                    <span className="text-sm text-slate-400">
+                      / {u?.limit ?? 0}
+                    </span>
                   </div>
-                  <ProgressBar value={u?.used ?? 0} max={u?.limit ?? 1} colorClass={colorClass} />
-                  <p className="text-xs text-slate-500 mt-2">{u?.remaining ?? 0} remaining this month</p>
+                  <ProgressBar
+                    value={u?.used ?? 0}
+                    max={u?.limit ?? 1}
+                    colorClass={colorClass}
+                  />
+                  <p className="text-xs text-slate-500 mt-2">
+                    {u?.remaining ?? 0} remaining this month
+                  </p>
                 </Card>
               );
             })}
@@ -125,14 +165,18 @@ export default function DashboardPage() {
           {tools.map((t) => (
             <Link key={t.href} href={t.href}>
               <Card className="p-5 h-full hover:shadow-md hover:border-slate-300 transition-all cursor-pointer group">
-                <div className={`w-11 h-11 rounded-xl ${t.bg} flex items-center justify-center mb-4`}>
+                <div
+                  className={`w-11 h-11 rounded-xl ${t.bg} flex items-center justify-center mb-4`}
+                >
                   {t.icon}
                 </div>
                 <div className="flex items-center gap-2 mb-2">
                   <h3 className="font-semibold text-slate-900">{t.title}</h3>
                   <Badge variant={t.badgeVariant}>{t.badge}</Badge>
                 </div>
-                <p className="text-sm text-slate-500 leading-relaxed">{t.desc}</p>
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  {t.desc}
+                </p>
                 <div className="flex items-center gap-1 mt-4 text-blue-600 text-sm font-medium group-hover:gap-2 transition-all">
                   Get Started <ArrowRight size={14} />
                 </div>

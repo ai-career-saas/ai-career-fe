@@ -47,7 +47,7 @@ export default function PricingPage() {
       return;
     }
 
-    if (plan.price_usd === 0) {
+    if (plan.price_thb === 0) {
       setSuccess("You're already on the Free plan!");
       return;
     }
@@ -80,7 +80,7 @@ export default function PricingPage() {
     }
 
     const confirmed = window.confirm(
-      "Cancel your subscription? You can still use the current plan until the billing period ends."
+      "Cancel your subscription? You can still use the current plan until the billing period ends.",
     );
 
     if (!confirmed) {
@@ -224,7 +224,7 @@ export default function PricingPage() {
 
                 {/* Price */}
                 <div className="mb-6">
-                  {plan.price_usd === 0 ? (
+                  {plan.price_thb === 0 ? (
                     <div className="flex items-baseline gap-1">
                       <span className="text-4xl font-bold text-slate-900">
                         Free
@@ -236,7 +236,7 @@ export default function PricingPage() {
                         $
                       </span>
                       <span className="text-4xl font-bold text-slate-900">
-                        {plan.price_usd}
+                        {plan.price_thb}
                       </span>
                       <span className="text-slate-500 text-sm">/month</span>
                     </div>
@@ -281,9 +281,9 @@ export default function PricingPage() {
                     loading={subscribing === plan.id}
                     disabled={!!subscribing}
                   >
-                    {plan.price_usd === 0
+                    {plan.price_thb === 0
                       ? "Get Started Free"
-                      : `Subscribe — $${plan.price_usd}/mo`}
+                      : `Subscribe — $${plan.price_thb}/mo`}
                   </Button>
                 )}
               </div>
