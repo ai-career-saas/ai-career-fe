@@ -184,7 +184,7 @@ export function LoginForm() {
           </p>
 
           {/* Product preview card */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-5">
+          <div className="rounded-2xl border border-white/10 bg-white/4 backdrop-blur-sm p-5">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 rounded-full bg-rose-600 flex items-center justify-center shrink-0">
                 <Bot size={18} className="text-white" />
@@ -200,7 +200,7 @@ export function LoginForm() {
             </div>
 
             <div className="grid grid-cols-3 gap-2 mb-4">
-              <div className="rounded-xl bg-white/[0.06] border border-white/10 px-3 py-3 text-center">
+              <div className="rounded-xl bg-white/6 border border-white/10 px-3 py-3 text-center">
                 <FileText size={16} className="text-rose-400 mx-auto mb-1.5" />
                 <p className="text-[11px] text-slate-300 leading-tight">
                   Resume
@@ -208,7 +208,7 @@ export function LoginForm() {
                   Analysis
                 </p>
               </div>
-              <div className="rounded-xl bg-white/[0.06] border border-white/10 px-3 py-3 text-center">
+              <div className="rounded-xl bg-white/6 border border-white/10 px-3 py-3 text-center">
                 <MessagesSquare
                   size={16}
                   className="text-rose-400 mx-auto mb-1.5"
@@ -219,7 +219,7 @@ export function LoginForm() {
                   Prep
                 </p>
               </div>
-              <div className="rounded-xl bg-white/[0.06] border border-white/10 px-3 py-3 text-center">
+              <div className="rounded-xl bg-white/6 border border-white/10 px-3 py-3 text-center">
                 <Target size={16} className="text-rose-400 mx-auto mb-1.5" />
                 <p className="text-[11px] text-slate-300 leading-tight">
                   ATS
@@ -229,7 +229,7 @@ export function LoginForm() {
               </div>
             </div>
 
-            <div className="rounded-xl bg-white/[0.06] border border-white/10 px-4 py-3 flex items-center justify-between">
+            <div className="rounded-xl bg-white/6 border border-white/10 px-4 py-3 flex items-center justify-between">
               <span className="text-xs text-slate-300">Resume match score</span>
               <span className="text-sm font-semibold text-rose-400">87%</span>
             </div>
