@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme>
+        <Theme accentColor="ruby">
           <div className="min-h-screen relative">{children}</div>
         </Theme>
         <div id="toast-root" />
