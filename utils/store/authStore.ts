@@ -7,9 +7,11 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  created_at?: string;
   plan_name?: string;
-  sub_status?: string;
   quota?: Record<string, number>;
+  sub_status?: string;
+  current_period_end?: string;
 }
 
 interface AuthState {
@@ -34,8 +36,7 @@ export const useAuthStore = create<AuthState>()(
 
       setUser: (user) => set({ user }),
 
-      logout: () =>
-        set({ user: null, accessToken: null, refreshToken: null }),
+      logout: () => set({ user: null, accessToken: null, refreshToken: null }),
 
       isAuthenticated: () => !!get().accessToken && !!get().user,
     }),
@@ -46,6 +47,6 @@ export const useAuthStore = create<AuthState>()(
         accessToken: s.accessToken,
         refreshToken: s.refreshToken,
       }),
-    }
-  )
+    },
+  ),
 );

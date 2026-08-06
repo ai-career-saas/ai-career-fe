@@ -22,10 +22,11 @@ export interface AuthResponse {
 export interface Plan {
   id: string;
   name: string;
-  price_thb: number;
   description: string;
+  price_thb: number;
   stripe_price_id: string | null;
-  quota: Record<string, number>;
+  // quota: Record<string, number>;
+  quota: number;
   features: string[];
 }
 
