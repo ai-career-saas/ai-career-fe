@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -14,8 +14,9 @@ import {
 } from "lucide-react";
 import { Card, Badge, ProgressBar, Spinner } from "@/components/ui";
 import { useAuthStore } from "@/utils/store/authStore";
-import { usageApi, authApi } from "@/lib/api";
+import { usageApi } from "@/lib/api";
 import { UsageMap } from "@/types";
+import { client } from "@/utils/api/client";
 
 const FEATURE_LABELS: Record<
   string,
@@ -25,7 +26,7 @@ const FEATURE_LABELS: Record<
     label: "Career Analysis",
     icon: <Target size={18} />,
     href: "/dashboard/analyze",
-    color: "text-blue-600",
+    color: "text-rose-600",
   },
   interview_gen: {
     label: "Interview Prep",
@@ -49,19 +50,20 @@ export default function DashboardPage() {
   useEffect(() => {
     Promise.all([
       usageApi.getAll().then((r) => setUsage(r.data)),
-      authApi.me().then((r) => setUser(r.data)),
+      client.GET("/auth/me").then((r) => setUser(r.data!)),
+      // authApi.me().then((r) => setUser(r.data)),
     ]).finally(() => setLoading(false));
   }, [setUser]);
 
   const tools = [
     {
       href: "/dashboard/analyze",
-      icon: <Target size={22} className="text-blue-600" />,
-      bg: "bg-blue-50",
+      icon: <Target size={22} className="text-rose-600" />,
+      bg: "bg-rose-50",
       title: "Career Analysis",
       desc: "AI analyzes your skills, detects gaps, and builds a personalized roadmap.",
       badge: "Popular",
-      badgeVariant: "blue" as const,
+      badgeVariant: "rose" as const,
     },
     {
       href: "/dashboard/interview-prep",
@@ -96,7 +98,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <Badge
-          variant={user?.plan_name === "Free" ? "gray" : "blue"}
+          variant={user?.plan_name === "Free" ? "gray" : "rose"}
           className="px-3 py-1 text-sm"
         >
           <Sparkles size={12} className="mr-1" />
@@ -123,7 +125,7 @@ export default function DashboardPage() {
                   ? "bg-red-500"
                   : pct >= 70
                     ? "bg-yellow-500"
-                    : "bg-blue-500";
+                    : "bg-rose-500";
 
               return (
                 <Card key={key} className="p-4">
@@ -177,7 +179,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-slate-500 leading-relaxed">
                   {t.desc}
                 </p>
-                <div className="flex items-center gap-1 mt-4 text-blue-600 text-sm font-medium group-hover:gap-2 transition-all">
+                <div className="flex items-center gap-1 mt-4 text-rose-600 text-sm font-medium group-hover:gap-2 transition-all">
                   Get Started <ArrowRight size={14} />
                 </div>
               </Card>
@@ -188,20 +190,20 @@ export default function DashboardPage() {
 
       {/* Upgrade CTA if Free */}
       {user?.plan_name === "Free" && (
-        <Card className="p-6 bg-gradient-to-r from-blue-600 to-indigo-600 border-0 text-white">
+        <Card className="p-6 bg-linear-to-r from-rose-600 to-rose-600 border-0 text-white">
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <Zap size={18} />
                 <h3 className="font-bold text-lg">Upgrade to Pro</h3>
               </div>
-              <p className="text-blue-100 text-sm">
+              <p className="text-rose-100 text-sm">
                 Get 30 analyses/month, unlimited roadmaps & priority support.
               </p>
             </div>
             <Link
               href="/pricing"
-              className="shrink-0 bg-white text-blue-700 font-semibold px-5 py-2.5 rounded-xl hover:bg-blue-50 transition-all text-sm"
+              className="shrink-0 bg-white text-rose-700 font-semibold px-5 py-2.5 rounded-xl hover:bg-rose-50 transition-all text-sm"
             >
               View Plans
             </Link>

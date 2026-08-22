@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { cn } from "@/utils/cn";
 
@@ -12,7 +12,7 @@ export function ProgressBar({ value, max = 100, className, colorClass }: {
   return (
     <div className={cn("h-2 rounded-full bg-slate-100 overflow-hidden", className)}>
       <div
-        className={cn("h-full rounded-full transition-all duration-700", colorClass || "bg-blue-500")}
+        className={cn("h-full rounded-full transition-all duration-700", colorClass || "bg-rose-500")}
         style={{ width: `${pct}%` }}
       />
     </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { userApi } from "@/lib/api";
@@ -63,7 +63,7 @@ export default function ProfileSettingsForm() {
               type="text"
               value={settings.name}
               onChange={(e) => handleChange("name", e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
 
@@ -79,7 +79,7 @@ export default function ProfileSettingsForm() {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Language
             </label>
@@ -93,7 +93,7 @@ export default function ProfileSettingsForm() {
               <option value="en">English</option>
               <option value="th">ไทย</option>
             </select>
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -107,7 +107,7 @@ export default function ProfileSettingsForm() {
             />
           </div>
 
-          <fieldset className="rounded-2xl border border-slate-200 bg-linear-to-br from-slate-50 via-white to-slate-50 px-4 py-4 shadow-sm">
+          {/* <fieldset className="rounded-2xl border border-slate-200 bg-linear-to-br from-slate-50 via-white to-slate-50 px-4 py-4 shadow-sm">
             <legend className="px-2 text-sm font-semibold text-slate-900">
               Notifications
             </legend>
@@ -130,19 +130,19 @@ export default function ProfileSettingsForm() {
                     type="checkbox"
                     checked={settings[key]}
                     onChange={(e) => handleChange(key, e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-2 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-slate-300 text-rose-600 focus:ring-2 focus:ring-rose-500"
                   />
                   <span className="flex-1">{label}</span>
                 </label>
               ))}
             </div>
-          </fieldset>
+          </fieldset> */}
 
           <div className="flex items-center gap-3">
             <button
               onClick={handleSave}
               disabled={saving}
-              className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+              className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 disabled:opacity-50"
             >
               {saving ? "Saving…" : "Save changes"}
             </button>

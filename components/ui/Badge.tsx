@@ -1,13 +1,13 @@
-"use client";
+﻿"use client";
 
 import { cn } from "@/utils/cn";
 import { ReactNode } from "react";
 
-type BadgeVariant = "blue" | "green" | "yellow" | "red" | "gray" | "purple";
+type BadgeVariant = "rose" | "green" | "yellow" | "red" | "gray" | "purple";
 
 export function Badge({
   children,
-  variant = "blue",
+  variant = "rose",
   className,
 }: {
   children: ReactNode;
@@ -15,7 +15,7 @@ export function Badge({
   className?: string;
 }) {
   const variants: Record<BadgeVariant, string> = {
-    blue:   "bg-blue-100 text-blue-700 border-blue-200",
+    rose:   "bg-rose-100 text-rose-700 border-rose-200",
     green:  "bg-green-100 text-green-700 border-green-200",
     yellow: "bg-yellow-100 text-yellow-700 border-yellow-200",
     red:    "bg-red-100 text-red-700 border-red-200",

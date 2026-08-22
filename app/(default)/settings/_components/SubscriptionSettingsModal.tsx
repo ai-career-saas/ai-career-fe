@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
@@ -29,6 +29,25 @@ export default function SubscriptionSettingsModal() {
   const [loading, setLoading] = useState(false);
   const [busy, setBusy] = useState(false);
   const [confirmingCancel, setConfirmingCancel] = useState(false);
+  const [portalError, setPortalError] = useState<string | null>(null);
+
+  const getApiErrorMessage = (error: unknown) => {
+    if (!error || typeof error !== "object") {
+      return null;
+    }
+
+    const message = (error as { message?: unknown }).message;
+    if (typeof message === "string") {
+      return message;
+    }
+
+    if (Array.isArray(message)) {
+      const text = message.find((item): item is string => typeof item === "string");
+      return text ?? null;
+    }
+
+    return null;
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -62,6 +81,7 @@ export default function SubscriptionSettingsModal() {
   useEffect(() => {
     if (!isOpen) {
       setConfirmingCancel(false);
+      setPortalError(null);
     }
   }, [isOpen]);
 
@@ -91,28 +111,29 @@ export default function SubscriptionSettingsModal() {
   };
 
   const handleManageSubscription = async () => {
+    setPortalError(null);
     setBusy(true);
+    const { data, error } = await client.GET("/billing/portal");
+    const portalUrl = (data as { url?: string } | undefined)?.url;
 
-    try {
-      const response = await client.GET("/billing/portal");
-
-      const portalUrl = (response as any)?.data?.url;
-
-      if (portalUrl) {
-        window.open(portalUrl, "_blank");
-      } else {
-        throw new Error("Failed to get billing portal URL");
-      }
-    } catch (error) {
-      console.error("Error managing subscription:", error);
-    } finally {
-      setBusy(false);
+    if (error) {
+      setPortalError(
+        getApiErrorMessage(error) ?? "Unable to open billing portal right now.",
+      );
+    } else if (!portalUrl) {
+      setPortalError("Unable to open billing portal right now.");
+    } else {
+      window.open(portalUrl, "_blank", "noopener,noreferrer");
     }
+
+    setBusy(false);
   };
 
   if (!isOpen) {
     return null;
   }
+
+  const canManageBilling = (plan?.price_thb ?? 0) > 0;
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => !open && close()}>
@@ -209,14 +230,14 @@ export default function SubscriptionSettingsModal() {
                   <div className="mt-6 flex flex-wrap gap-2">
                     <button
                       type="button"
-                      disabled={busy}
+                      disabled={busy || !canManageBilling}
                       onClick={handleManageSubscription}
                       className="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       Manage subscription
                     </button>
 
-                    {plan.cancelAtPeriodEnd ? (
+                    {canManageBilling && plan.cancelAtPeriodEnd ? (
                       <button
                         type="button"
                         onClick={handleResume}
@@ -225,7 +246,7 @@ export default function SubscriptionSettingsModal() {
                       >
                         Resume subscription
                       </button>
-                    ) : (
+                    ) : canManageBilling ? (
                       <button
                         type="button"
                         onClick={() => setConfirmingCancel(true)}
@@ -234,8 +255,16 @@ export default function SubscriptionSettingsModal() {
                       >
                         Cancel subscription
                       </button>
-                    )}
+                    ) : null}
                   </div>
+                  {!canManageBilling && (
+                    <p className="mt-2 text-sm text-slate-500">
+                      Billing management is available on paid plans.
+                    </p>
+                  )}
+                  {portalError && (
+                    <p className="mt-2 text-sm text-rose-600">{portalError}</p>
+                  )}
 
                   {confirmingCancel && (
                     <div className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm">
@@ -299,7 +328,7 @@ export default function SubscriptionSettingsModal() {
                                 href={inv.hostedInvoiceUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-indigo-600 transition hover:underline"
+                                className="text-rose-600 transition hover:underline"
                               >
                                 View
                               </a>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { XCircle, ArrowLeft, RefreshCw } from "lucide-react";
@@ -57,7 +57,7 @@ export default function BillingCancelPage() {
               </Button>
               <Button
                 variant="primary"
-                className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold flex items-center justify-center gap-2"
+                className="w-full bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-semibold flex items-center justify-center gap-2"
                 onClick={() => router.push("/pricing")}
               >
                 <RefreshCw size={16} />

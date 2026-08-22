@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -910,7 +910,7 @@ export default function AnalyzePage() {
               value={careerGoal}
               onChange={(e) => setCareerGoal(e.target.value)}
               placeholder="e.g. Data Engineer, Full Stack Developer..."
-              className="rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
 
@@ -934,7 +934,7 @@ export default function AnalyzePage() {
             ) : (
               <button
                 onClick={() => fileRef.current?.click()}
-                className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-dashed border-slate-300 text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-dashed border-slate-300 text-sm text-slate-500 hover:border-rose-400 hover:text-rose-600 transition-colors"
               >
                 <Plus size={16} /> Upload PDF/DOCX
               </button>
@@ -960,7 +960,7 @@ export default function AnalyzePage() {
         </Button>
 
         {loading && step && (
-          <div className="flex items-center gap-2 text-sm text-blue-600 bg-blue-50 rounded-xl px-4 py-3">
+          <div className="flex items-center gap-2 text-sm text-rose-600 bg-rose-50 rounded-xl px-4 py-3">
             <Loader2 size={16} className="animate-spin shrink-0" />
             <span>{step}</span>
           </div>
@@ -979,9 +979,9 @@ export default function AnalyzePage() {
       {result && (
         <div className="space-y-4 animate-fade-in">
           {/* AI Message */}
-          {/* <Card className="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          {/* <Card className="p-5 bg-gradient-to-r from-rose-50 to-rose-50 border-rose-200">
             <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-rose-600 flex items-center justify-center shrink-0">
                 <Sparkles size={14} className="text-white" />
               </div>
               <p className="text-sm text-slate-700 leading-relaxed">{result.message}</p>
@@ -1003,7 +1003,7 @@ export default function AnalyzePage() {
                       s.level === "advanced"
                         ? "bg-purple-100 text-purple-700 border-purple-200"
                         : s.level === "intermediate"
-                          ? "bg-blue-100 text-blue-700 border-blue-200"
+                          ? "bg-rose-100 text-rose-700 border-rose-200"
                           : "bg-slate-100 text-slate-600 border-slate-200",
                     )}
                   >
@@ -1078,15 +1078,15 @@ export default function AnalyzePage() {
                 </div>
                 {/* Milestones */}
           {/* <div className="relative pl-4">
-                  <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-blue-100" />
+                  <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-rose-100" />
                   <div className="space-y-4">
                     {result.analysis.roadmap.milestones?.map(
                       (m: any, i: number) => (
                         <div key={i} className="relative pl-6">
-                          <div className="absolute -left-2 top-2 w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-sm" />
+                          <div className="absolute -left-2 top-2 w-4 h-4 rounded-full bg-rose-500 border-2 border-white shadow-sm" />
                           <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm">
                             <div className="flex items-center gap-2 mb-2">
-                              <Badge variant="blue" className="text-xs">
+                              <Badge variant="rose" className="text-xs">
                                 {m.week}
                               </Badge>
                               <span className="font-semibold text-sm text-slate-800">
@@ -1099,7 +1099,7 @@ export default function AnalyzePage() {
                                   key={j}
                                   className="text-xs text-slate-600 flex items-start gap-2"
                                 >
-                                  <span className="text-blue-400 mt-0.5">
+                                  <span className="text-rose-400 mt-0.5">
                                     ▸
                                   </span>
                                   {t}
@@ -1117,7 +1117,7 @@ export default function AnalyzePage() {
                                         href={r.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-xs text-blue-600 hover:underline"
+                                        className="text-xs text-rose-600 hover:underline"
                                       >
                                         📚 {r.name}
                                       </a>

@@ -1,17 +1,18 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Check, Sparkles, Zap, Crown, ArrowLeft, Loader2 } from "lucide-react";
 import { Button, Badge, Card, Alert, Spinner } from "@/components/ui";
-import { plansApi, billingApi, authApi } from "@/lib/api";
+import { billingApi } from "@/lib/api";
 import { useAuthStore } from "@/utils/store/authStore";
 import { Plan } from "@/types";
+import { client } from "@/utils/api/client";
 
 const PLAN_ICONS: Record<string, React.ReactNode> = {
   Free: <Sparkles size={22} className="text-slate-600" />,
-  Pro: <Zap size={22} className="text-blue-600" />,
+  Pro: <Zap size={22} className="text-rose-600" />,
   Premium: <Crown size={22} className="text-amber-500" />,
 };
 
@@ -20,7 +21,7 @@ const PLAN_STYLES: Record<
   { border: string; bg: string; badge?: string }
 > = {
   Free: { border: "border-slate-200", bg: "bg-white" },
-  Pro: { border: "border-blue-500", bg: "bg-white", badge: "Most Popular" },
+  Pro: { border: "border-rose-500", bg: "bg-white", badge: "Most Popular" },
   Premium: { border: "border-amber-400", bg: "bg-white", badge: "Best Value" },
 };
 
@@ -34,11 +35,20 @@ export default function PricingPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const fetchPlans = async () => {
+    const { data, error } = await client.GET("/plans");
+
+    if (error) {
+      setError("Failed to fetch plans");
+    } else {
+      setPlans(data || []);
+    }
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    plansApi
-      .getAll()
-      .then((r) => setPlans(r.data))
-      .finally(() => setLoading(false));
+    fetchPlans();
   }, []);
 
   const handleSubscribe = async (plan: Plan) => {
@@ -93,8 +103,10 @@ export default function PricingPage() {
 
     try {
       await billingApi.cancel();
-      const { data } = await authApi.me();
-      setUser(data);
+      const { data, error } = await client.GET("/auth/me");
+      if (!error) {
+        setUser(data);
+      }
       setSuccess("Your subscription has been cancelled.");
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to cancel subscription");
@@ -126,7 +138,7 @@ export default function PricingPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <Badge variant="blue" className="mb-4 px-3 py-1">
+          <Badge variant="rose" className="mb-4 px-3 py-1">
             Simple Pricing
           </Badge>
           <h1 className="text-4xl font-bold text-slate-900 mb-3">
@@ -196,12 +208,12 @@ export default function PricingPage() {
             return (
               <div
                 key={plan.id}
-                className={`relative rounded-2xl border-2 ${style.border} ${style.bg} p-6 shadow-sm hover:shadow-md transition-shadow ${isPro ? "shadow-blue-100" : ""}`}
+                className={`relative rounded-2xl border-2 ${style.border} ${style.bg} p-6 shadow-sm hover:shadow-md transition-shadow ${isPro ? "shadow-rose-100" : ""}`}
               >
                 {style.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                     <Badge
-                      variant={plan.name === "Pro" ? "blue" : "yellow"}
+                      variant={plan.name === "Pro" ? "rose" : "yellow"}
                       className="px-3 py-1 shadow-sm"
                     >
                       {style.badge}
@@ -212,7 +224,7 @@ export default function PricingPage() {
                 {/* Plan Header */}
                 <div className="flex items-center gap-3 mb-4 pt-2">
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center ${plan.name === "Free" ? "bg-slate-100" : plan.name === "Pro" ? "bg-blue-50" : "bg-amber-50"}`}
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center ${plan.name === "Free" ? "bg-slate-100" : plan.name === "Pro" ? "bg-rose-50" : "bg-amber-50"}`}
                   >
                     {icon}
                   </div>
@@ -261,7 +273,7 @@ export default function PricingPage() {
                     >
                       <Check
                         size={16}
-                        className={`mt-0.5 shrink-0 ${plan.name === "Free" ? "text-slate-400" : plan.name === "Pro" ? "text-blue-500" : "text-amber-500"}`}
+                        className={`mt-0.5 shrink-0 ${plan.name === "Free" ? "text-slate-400" : plan.name === "Pro" ? "text-rose-500" : "text-amber-500"}`}
                       />
                       {f}
                     </li>
@@ -301,7 +313,7 @@ export default function PricingPage() {
               Already have an account?{" "}
               <Link
                 href="/auth/login"
-                className="text-blue-600 hover:underline font-medium"
+                className="text-rose-600 hover:underline font-medium"
               >
                 Sign in
               </Link>

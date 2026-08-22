@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import {
@@ -167,15 +167,15 @@ export default function ATSScorePage() {
             Resume <span className="text-red-500">*</span>
           </label>
           {file ? (
-            <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-blue-300 bg-blue-50">
-              <FileText size={18} className="text-blue-600 shrink-0" />
+            <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-rose-300 bg-rose-50">
+              <FileText size={18} className="text-rose-600 shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-blue-800 truncate">{file.name}</p>
-                <p className="text-xs text-blue-500">{(file.size / 1024).toFixed(1)} KB</p>
+                <p className="text-sm font-medium text-rose-800 truncate">{file.name}</p>
+                <p className="text-xs text-rose-500">{(file.size / 1024).toFixed(1)} KB</p>
               </div>
               <button
                 onClick={() => setFile(null)}
-                className="p-1.5 rounded-lg text-blue-400 hover:text-blue-700 hover:bg-blue-100 transition-all"
+                className="p-1.5 rounded-lg text-rose-400 hover:text-rose-700 hover:bg-rose-100 transition-all"
               >
                 <X size={16} />
               </button>
@@ -183,7 +183,7 @@ export default function ATSScorePage() {
           ) : (
             <button
               onClick={() => fileRef.current?.click()}
-              className="flex flex-col items-center gap-2 py-8 rounded-xl border-2 border-dashed border-slate-300 text-slate-400 hover:border-blue-400 hover:text-blue-500 transition-all"
+              className="flex flex-col items-center gap-2 py-8 rounded-xl border-2 border-dashed border-slate-300 text-slate-400 hover:border-rose-400 hover:text-rose-500 transition-all"
             >
               <FileText size={28} />
               <span className="text-sm font-medium">Click to upload resume</span>
@@ -249,7 +249,7 @@ export default function ATSScorePage() {
             {/* Keywords */}
             <Card className="p-5">
               <h3 className="font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                <Target size={16} className="text-blue-600" /> Keyword Analysis
+                <Target size={16} className="text-rose-600" /> Keyword Analysis
               </h3>
 
               {result.missing_critical_keywords?.length > 0 && (

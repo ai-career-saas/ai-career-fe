@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import {
@@ -54,14 +54,14 @@ export default function RootPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-blue-200/50 blur-3xl" />
-        <div className="absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-indigo-200/50 blur-3xl" />
+        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-rose-200/50 blur-3xl" />
+        <div className="absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-rose-200/50 blur-3xl" />
       </div>
 
-      <header className="border-b border-slate-200/80 bg-white/80 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 shadow-sm shadow-blue-500/30">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-600 shadow-sm shadow-rose-500/30">
               <Sparkles size={18} className="text-white" />
             </div>
             <div>
@@ -72,7 +72,7 @@ export default function RootPage() {
                 Career tools that actually move you forward
               </p>
             </div>
-          </Link>
+          </div>
 
           <nav className="hidden items-center gap-6 text-sm text-slate-600 md:flex">
             <a
@@ -113,7 +113,7 @@ export default function RootPage() {
 
       <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:py-24">
         <div className="space-y-8 animate-fade-in">
-          <Badge variant="blue" className="inline-flex w-fit px-3 py-1 text-sm">
+          <Badge variant="rose" className="inline-flex w-fit px-3 py-1 text-sm">
             <Sparkles size={12} className="mr-1" />
             AI-powered career coaching
           </Badge>
@@ -145,7 +145,7 @@ export default function RootPage() {
 
           <div className="grid gap-4 sm:grid-cols-3">
             <Card className="p-4">
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
                 <TrendingUp size={18} />
               </div>
               <p className="text-2xl font-bold text-slate-900">3 tools</p>
@@ -163,7 +163,7 @@ export default function RootPage() {
               </p>
             </Card>
             <Card className="p-4">
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
                 <Users size={18} />
               </div>
               <p className="text-2xl font-bold text-slate-900">Personalized</p>
@@ -176,7 +176,7 @@ export default function RootPage() {
 
         <div className="relative animate-fade-in lg:pt-4 flex items-center justify-center">
           <Card className="relative overflow-hidden p-6 shadow-lg shadow-slate-200/80">
-            <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-blue-500 via-indigo-500 to-cyan-500" />
+            <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-rose-500 via-rose-500 to-cyan-500" />
 
             <div className="space-y-6">
               <div className="flex items-center justify-between">
@@ -188,7 +188,7 @@ export default function RootPage() {
                     Your AI career dashboard
                   </h2>
                 </div>
-                <div className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                <div className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700">
                   Ready to use
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default function RootPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                    <Brain size={16} className="text-blue-600" />
+                    <Brain size={16} className="text-rose-600" />
                     Skill analysis
                   </div>
                   <p className="mt-3 text-sm leading-6 text-slate-600">
@@ -205,7 +205,7 @@ export default function RootPage() {
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                    <Target size={16} className="text-blue-600" />
+                    <Target size={16} className="text-rose-600" />
                     Roadmap clarity
                   </div>
                   <p className="mt-3 text-sm leading-6 text-slate-600">
@@ -214,13 +214,13 @@ export default function RootPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-blue-100 bg-blue-50/80 p-4">
-                <p className="text-sm font-semibold text-blue-700">
+              <div className="rounded-2xl border border-rose-100 bg-rose-50/80 p-4">
+                <p className="text-sm font-semibold text-rose-700">
                   What you get
                 </p>
                 <div className="mt-3 space-y-3 text-sm text-slate-700">
                   <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm">
+                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-rose-600 shadow-sm">
                       1
                     </div>
                     <p>
@@ -229,7 +229,7 @@ export default function RootPage() {
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm">
+                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-rose-600 shadow-sm">
                       2
                     </div>
                     <p>
@@ -238,7 +238,7 @@ export default function RootPage() {
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm">
+                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white text-rose-600 shadow-sm">
                       3
                     </div>
                     <p>
@@ -271,7 +271,7 @@ export default function RootPage() {
               key={title}
               className="p-6 transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
             >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
                 <Icon size={20} />
               </div>
               <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
@@ -302,7 +302,7 @@ export default function RootPage() {
                 key={step.number}
                 className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
               >
-                <p className="text-sm font-semibold text-blue-600">
+                <p className="text-sm font-semibold text-rose-600">
                   {step.number}
                 </p>
                 <h3 className="mt-3 text-base font-semibold text-slate-900">
@@ -318,10 +318,10 @@ export default function RootPage() {
       </section>
 
       <section id="pricing" className="mx-auto max-w-6xl px-6 pb-20 lg:px-8">
-        <Card className="bg-linear-to-r from-blue-600 to-indigo-600 p-6 text-white lg:p-8">
+        <Card className="bg-linear-to-r from-rose-600 to-rose-600 p-6 text-white lg:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-50">
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-rose-50">
                 <Sparkles size={12} />
                 Free to start
               </div>
@@ -329,7 +329,7 @@ export default function RootPage() {
                 Start with the free plan, then upgrade when the tools earn their
                 keep.
               </h2>
-              <p className="mt-2 text-sm leading-6 text-blue-100">
+              <p className="mt-2 text-sm leading-6 text-rose-100">
                 Explore the dashboard, test the analysis tools, and move to a
                 paid plan when you need more volume and support.
               </p>
@@ -344,7 +344,7 @@ export default function RootPage() {
               <Link href="/auth/register">
                 <Button
                   size="lg"
-                  className="bg-white text-blue-700 hover:bg-blue-50"
+                  className="bg-white text-rose-700 hover:bg-rose-50"
                 >
                   Create account
                 </Button>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { HasGoalAnalysis } from "@/types";
 import { Badge, Section } from "@/components/ui";
@@ -72,7 +72,7 @@ export default function HasGoalAnalysis({
                   s.level === "advanced"
                     ? "bg-purple-100 text-purple-700 border-purple-200"
                     : s.level === "intermediate"
-                      ? "bg-blue-100 text-blue-700 border-blue-200"
+                      ? "bg-rose-100 text-rose-700 border-rose-200"
                       : "bg-slate-100 text-slate-600 border-slate-200",
                 )}
               >
@@ -160,14 +160,14 @@ export default function HasGoalAnalysis({
             </div>
             {/* Milestones */}
             <div className="relative pl-4">
-              <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-blue-100" />
+              <div className="absolute left-1.5 top-0 bottom-0 w-0.5 bg-rose-100" />
               <div className="space-y-4">
                 {analysis.roadmap.milestones?.map((m: any, i: number) => (
                   <div key={i} className="relative pl-6">
-                    <div className="absolute -left-2 top-2 w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-sm" />
+                    <div className="absolute -left-2 top-2 w-4 h-4 rounded-full bg-rose-500 border-2 border-white shadow-sm" />
                     <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="blue" className="text-xs">
+                        <Badge variant="rose" className="text-xs">
                           {m.week}
                         </Badge>
                         <span className="font-semibold text-sm text-slate-800">
@@ -180,7 +180,7 @@ export default function HasGoalAnalysis({
                             key={j}
                             className="text-xs text-slate-600 flex items-start gap-2"
                           >
-                            <span className="text-blue-400 mt-0.5">▸</span>
+                            <span className="text-rose-400 mt-0.5">▸</span>
                             {t}
                           </li>
                         ))}
@@ -194,7 +194,7 @@ export default function HasGoalAnalysis({
                                 href={r.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-blue-600 hover:underline"
+                                className="text-xs text-rose-600 hover:underline"
                               >
                                 📚 {r.name}
                               </a>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, Loader2, ArrowRight } from "lucide-react";
 import { Card, Button, Badge } from "@/components/ui";
 import { useAuthStore } from "@/utils/store/authStore";
-import { authApi } from "@/lib/api";
+import { client } from "@/utils/api/client";
 
 export default function BillingSuccessPage() {
   const router = useRouter();
@@ -21,8 +21,9 @@ export default function BillingSuccessPage() {
 
     const checkSubscription = async () => {
       try {
-        const { data } = await authApi.me();
-        if (data.plan_name && data.plan_name !== "Free") {
+        const { data } = await client.GET("/auth/me");
+
+        if (data?.plan_name && data.plan_name !== "Free") {
           setUser(data);
           setPlanName(data.plan_name);
           setVerifying(false);
@@ -55,6 +56,7 @@ export default function BillingSuccessPage() {
             router.push("/dashboard");
             return 0;
           }
+
           return prev - 1;
         });
       }, 1000);

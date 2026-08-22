@@ -69,13 +69,13 @@ export function createApiClient(): AxiosInstance {
 export const api = createApiClient();
 
 // ── Auth ─────────────────────────────────────────────────────────────────
-export const authApi = {
-  register: (data: { email: string; name: string; password: string }) =>
-    api.post("/auth/register", data),
-  login: (data: { email: string; password: string }) =>
-    api.post("/auth/login", data),
-  me: () => api.get("/auth/me"),
-};
+// export const authApi = {
+//   register: (data: { email: string; name: string; password: string }) =>
+//     api.post("/auth/register", data),
+//   login: (data: { email: string; password: string }) =>
+//     api.post("/auth/login", data),
+//   me: () => api.get("/auth/me"),
+// };
 
 // ── Plans ─────────────────────────────────────────────────────────────────
 export const plansApi = {
@@ -118,4 +118,4 @@ export const usageApi = {
 export const userApi = {
   getProfile: () => api.get("/users"),
   updateProfile: (data: UpdateUserDto) => api.patch("/users", data),
-}
+};

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import {
@@ -15,7 +15,7 @@ import { cn } from "@/utils/cn";
 
 /* ── helpers ───────────────────────────────────────────────────────── */
 const CATEGORY_META: Record<string, { label: string; color: string; bg: string }> = {
-  technical:    { label: "Technical",    color: "text-blue-700",   bg: "bg-blue-50 border-blue-200"   },
+  technical:    { label: "Technical",    color: "text-rose-700",   bg: "bg-rose-50 border-rose-200"   },
   behavioral:   { label: "Behavioral",   color: "text-purple-700", bg: "bg-purple-50 border-purple-200" },
   situational:  { label: "Situational",  color: "text-orange-700", bg: "bg-orange-50 border-orange-200" },
   culture_fit:  { label: "Culture Fit",  color: "text-green-700",  bg: "bg-green-50 border-green-200"  },
@@ -79,7 +79,7 @@ function QuestionCard({ q, index }: { q: InterviewQuestion; index: number }) {
               <ul className="space-y-1">
                 {q.key_points.map((p, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <span className="text-blue-500 mt-0.5 shrink-0">▸</span>{p}
+                    <span className="text-rose-500 mt-0.5 shrink-0">▸</span>{p}
                   </li>
                 ))}
               </ul>
@@ -172,7 +172,7 @@ export default function InterviewPrepPage() {
               value={form.targetRole}
               onChange={(e) => setForm({ ...form, targetRole: e.target.value })}
               placeholder="e.g. Senior Backend Developer"
-              className="rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all"
             />
           </div>
 
@@ -187,8 +187,8 @@ export default function InterviewPrepPage() {
                   className={cn(
                     "flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all capitalize",
                     form.experienceLevel === lvl
-                      ? "bg-blue-600 text-white border-blue-600"
-                      : "bg-white text-slate-600 border-slate-300 hover:border-blue-300"
+                      ? "bg-rose-600 text-white border-rose-600"
+                      : "bg-white text-slate-600 border-slate-300 hover:border-rose-300"
                   )}
                 >
                   {lvl}
@@ -221,7 +221,7 @@ export default function InterviewPrepPage() {
           ) : (
             <button
               onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-dashed border-slate-300 text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 transition-colors w-fit"
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-dashed border-slate-300 text-sm text-slate-500 hover:border-rose-400 hover:text-rose-600 transition-colors w-fit"
             >
               <Plus size={16} /> Upload Resume (PDF/DOCX)
             </button>
@@ -256,7 +256,7 @@ export default function InterviewPrepPage() {
       {result && !loading && (
         <div className="space-y-4 animate-fade-in">
           {/* Summary banner */}
-          <Card className="p-5 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+          <Card className="p-5 bg-gradient-to-r from-purple-50 to-rose-50 border-purple-200">
             <div className="flex items-start gap-3">
               <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center shrink-0">
                 <MessageSquare size={16} className="text-white" />
@@ -271,7 +271,7 @@ export default function InterviewPrepPage() {
               </div>
               <button
                 onClick={handleGenerate}
-                className="ml-auto p-2 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                className="ml-auto p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all"
                 title="Regenerate"
               >
                 <RefreshCw size={16} />
@@ -310,13 +310,13 @@ export default function InterviewPrepPage() {
           {result.preparation_tips?.length > 0 && (
             <Card className="p-5">
               <div className="flex items-center gap-2 mb-3">
-                <BookOpen size={16} className="text-blue-600" />
+                <BookOpen size={16} className="text-rose-600" />
                 <h3 className="font-semibold text-slate-800">Preparation Tips</h3>
               </div>
               <ul className="space-y-2">
                 {result.preparation_tips.map((tip, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <span className="text-blue-400 mt-0.5 shrink-0">•</span>{tip}
+                    <span className="text-rose-400 mt-0.5 shrink-0">•</span>{tip}
                   </li>
                 ))}
               </ul>

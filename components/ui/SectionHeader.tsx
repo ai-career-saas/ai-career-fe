@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ReactNode } from "react";
 
@@ -10,7 +10,7 @@ export function SectionHeader({ title, subtitle, icon }: {
   return (
     <div className="flex items-start gap-3 mb-6">
       {icon && (
-        <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center shrink-0">
           <span className="text-white">{icon}</span>
         </div>
       )}
